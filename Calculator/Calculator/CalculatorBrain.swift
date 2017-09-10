@@ -73,6 +73,15 @@ struct CalculatorBrain {
         }
     }
     
+    mutating func clear () {
+        accumulator = nil
+    }
+    
+    mutating func allClear () {
+        pedingBinaryOperation = nil
+        accumulator = nil
+    }
+    
     private mutating func performPendingBinaryOperation() {
         if pedingBinaryOperation != nil && accumulator != nil {
             accumulator = pedingBinaryOperation!.perform(with: accumulator!)

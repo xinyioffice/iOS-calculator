@@ -25,6 +25,10 @@ class ViewController: UIViewController {
     @IBAction func touchDigtit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         
+        if clearButton.currentTitle == "AC" {
+            clearButton.setTitle("C", for: .normal)
+        }
+        
         if userIsInTheMiddleOfTyping {
             let textCurrentlyInDisplay = display.text!
             display.text = textCurrentlyInDisplay + digit
@@ -68,6 +72,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addDot(_ sender: UIButton) {
+        if clearButton.currentTitle == "AC" {
+            clearButton.setTitle("C", for: .normal)
+        }
+        
         if userIsInTheMiddleOfTyping {
             display.text = display.text! + "."
         } else {
@@ -76,9 +84,11 @@ class ViewController: UIViewController {
         }
     }
     
+    
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
             brain.setOperand(Double(displayValue)!)
+            clearButton.setTitle("C", for: .normal)
             userIsInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {
@@ -88,6 +98,20 @@ class ViewController: UIViewController {
             displayValue = formattedValue(of: String(result))
         }
     }
+    
+    @IBAction func clearScreen(_ sender: UIButton) {
+        if sender.currentTitle == "C" {
+            display.text = "0"
+            clearButton.setTitle("AC", for: .normal)
+        } else if sender.currentTitle == "AC" {
+            display.text = "0"
+            brain.allClear()
+        } else {
+            clearButton.setTitle("AC", for: .normal)
+        }
+    }
+    
+    @IBOutlet weak var clearButton: UIButton!
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
